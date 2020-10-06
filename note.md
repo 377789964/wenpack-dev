@@ -38,3 +38,76 @@
   ]
 
 ## webpack默认只支持js文件打包，配置打包css文件
+- css-loader 负责解析@import这种语法 解析路径（将 CSS 转化成 CommonJS 模块）
+- style-loader 负责把css插入到header标签中
+- loader特点，功能单一组合使用，所以use属性是数组，loader有顺序，默认从右向左执行，从下到上执行
+- test: /\.css$/, use: ['style-loader', 'css-loader']
+- loader可以写成对象方式,从下往上执行，可以增加option属性
+- module: { // 模块
+    rules: [
+      { 
+        test: /\.css$/,
+        use: [
+          {
+            loader: 'style-loader',
+            options: {
+              insert: 'head'
+            }
+          },
+          'css-loader'
+        ]
+      },
+      { 
+        test: /\.scss$/,
+        use: [
+          {
+            loader: 'style-loader',
+            options: {
+              insert: 'head'
+            }
+          },
+          'css-loader',
+          'sass-loader' // scss->css
+        ]
+      }
+    ]
+  }
+- 上面的编译后将样式直接插入index.html文件的style标签，为了避免阻塞使用插件将样式抽离出来作为src进行引入
+- npm install mini-css-extract-plugin -D
+- 插件作用：将模块化的样式抽离成一个文件，写成一个link标签引入文件中
+- module: { // 模块
+    rules: [
+      { 
+        test: /\.css$/,
+        use: [
+          MiniCssExtractPlugin.loader, // 把解析的模块化的样式抽离成一个文件，写成一个link标签引入文件中
+          'css-loader'
+        ]
+      },
+      { 
+        test: /\.scss$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+          'sass-loader' // scss->css
+        ]
+      }
+    ]
+  }
+- css样式自动添加浏览器前缀loader及使用
+- npm install postcss-loader autoprefixer@8.0.0 -D（注意postcss-loader默认下载版本是4.0.3，对应的autoprefixer版本是8.0.0）
+- postcss-loader解析需要使用浏览器前缀的样式，添加样式前缀使用的是autoprefixer插件
+- postcss-loader使用需要配置文件：postcss.config.js 文件内容如下
+- module.exports = {
+  // 使用postcss-loader会执行这个文件，告诉执行autoprefixer插件
+  plugins: [require('autoprefixer')]
+}
+- 压缩css插件
+- npm install optimize-css-assets-webpack-plugin terser-webpack-plugin -D
+- 使用optimize-css-assets-webpack-plugin插件优化css，则必须使用terser-webpack-plugin来压缩js
+- 使用优化项
+- optimization: { // 优化项
+    // webpack成产环境默认会压缩js文件，使用该插件优化css则js就不优化压缩了，因此优化js/css插件同时使用
+    // minimizer: [new OptimizeCSSAssetsPlugin({})],
+    minimizer: [new TerserJSPlugin({}), new OptimizeCSSAssetsPlugin({})],
+  },
