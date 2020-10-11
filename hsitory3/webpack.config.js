@@ -17,7 +17,7 @@ module.exports = {
     contentBase: './build', // 指定静态服务默认文件夹
     compress: true // 是否压缩
   },
-  mode: 'development', // 模式 默认两种production(压缩) development（不压缩）
+  mode: 'production', // 模式 默认两种production(压缩) development（不压缩）
   entry: './src/index.js', // 入口
   output: {
     filename: 'bundle.js', // 打包后文件名
@@ -35,23 +35,6 @@ module.exports = {
   ],
   module: { // 模块
     rules: [
-      {
-        test: /\.js$/,
-        use: {
-          loader: 'babel-loader',
-          options: { // 将es6-es5
-            presets: [
-              '@babel/preset-env'
-            ],
-            sourceType: 'unambiguous',
-            plugins: [
-              ['@babel/plugin-proposal-decorators', {'legacy': true}], // 使用装饰器：是
-              ['@babel/plugin-proposal-class-properties', {'loose': true}], // 宽松模式： 是
-              ["@babel/plugin-transform-runtime"]
-            ]
-          }
-        }
-      },
       { 
         test: /\.css$/,
         use: [

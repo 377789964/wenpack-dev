@@ -111,3 +111,96 @@
     // minimizer: [new OptimizeCSSAssetsPlugin({})],
     minimizer: [new TerserJSPlugin({}), new OptimizeCSSAssetsPlugin({})],
   },
+
+## webpack配置js（es6-es5）
+- npm install babel-loader @babel/core @babel/preset-env -D
+- loader配置内容
+- {
+    test: /\.js$/,
+    use: {
+      loader: 'babel-loader',
+      options: { // 将es6-es5
+        presets: [
+          '@babel/preset-env'
+        ]
+      }
+    }
+  }
+- // 这种写法babel本身不支持，需要使用插件 @babel/plugin-proposal-class-properties
+  class A{ // 这种写法相当于： new A() a = 1（new一个A的实例，实例创建一个a属性）
+    a = 1
+  }
+- npm i @babel/plugin-proposal-class-properties -D 配置如下：
+- {
+    test: /\.js$/,
+    use: {
+      loader: 'babel-loader',
+      options: { // 将es6-es5
+        presets: [
+          '@babel/preset-env'
+        ],
+        plugins: [
+          '@babel/plugin-proposal-class-properties'
+        ]
+      }
+    }
+  },
+- @log装饰器的写法也不支持，需要使用插件
+- npm i @babel/plugin-proposal-decorators -D 配置如下：
+- {
+    test: /\.js$/,
+    use: {
+      loader: 'babel-loader',
+      options: { // 将es6-es5
+        presets: [
+          '@babel/preset-env'
+        ],
+        plugins: [
+          ['@babel/plugin-proposal-decorators', {'legacy': true}], // 使用装饰器：是
+          ['@babel/plugin-proposal-class-properties', {'loose': true}] // 宽松模式： 是
+        ]
+      }
+    }
+  },
+- 解决打包时类的校验函数复用和，高级语法报错的问题（generate/promise等语法） 
+- 报错信息： Uncaught ReferenceError: regeneratorRuntime is not defined
+- 使用插件@ babel / plugin-transform-runtime（开发依赖）  @babel/runtime（生产依赖）
+- npm install --save-dev @babel/plugin-transform-runtime
+- npm install --save @babel/runtime
+- {
+    test: /\.js$/,
+    use: {
+      loader: 'babel-loader',
+      options: { // 将es6-es5
+        presets: [
+          '@babel/preset-env'
+        ],
+        plugins: [
+          ['@babel/plugin-proposal-decorators', {'legacy': true}], // 使用装饰器：是
+          ['@babel/plugin-proposal-class-properties', {'loose': true}], // 宽松模式： 是
+          ["@babel/plugin-transform-runtime"] // 解决高级语法generate/promise等报错问题
+        ]
+      }
+    }
+  }
+- 解决高级语法报错问题后，重更启动项目会继续报错：Cannot assign to read only property 'exports' of object '#<Object>'
+- 报错的原因一：commonJS和ES6的语法是不太一样的前者是require和module.exports后者则是import和exports,当你混用这两个语法的时候，webpack就会报错
+- 报错原因二： @babel/plugin-transform-runtime这个插件的时候，同时你又在某个commonJS写的文件里使用这个插件时，babel会默认你这个文件是ES6的文件，然后就使用import导入了这个插件，从而产生了和第一种情况一样的混用错误
+- 解决方法：babel.config.js里配置sourceType: 'unambiguous'设置，让babel和webpack一样严格区分commonJS文件和ES6文件
+- {
+    test: /\.js$/,
+    use: {
+      loader: 'babel-loader',
+      options: { // 将es6-es5
+        presets: [
+          '@babel/preset-env'
+        ],
+        sourceType: 'unambiguous',
+        plugins: [
+          ['@babel/plugin-proposal-decorators', {'legacy': true}], // 使用装饰器：是
+          ['@babel/plugin-proposal-class-properties', {'loose': true}], // 宽松模式： 是
+          ["@babel/plugin-transform-runtime"]
+        ]
+      }
+    }
+  },
