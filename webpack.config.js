@@ -35,6 +35,12 @@ module.exports = {
   ],
   module: { // 模块
     rules: [
+      // {
+      //   test: /\.js$/,
+      //   loader: 'eslint-loader',
+      //   enforce: 'pre', // js文件会强制先走pre的loader
+      //   exclude: /node_modules/
+      // },
       {
         test: /\.js$/,
         use: {
@@ -50,7 +56,9 @@ module.exports = {
               ["@babel/plugin-transform-runtime"]
             ]
           }
-        }
+        },
+        include: path.resolve(__dirname, 'src'), // 只解析src目录下的js文件
+        exclude: /node_modules/ // 不解析node_modules文件夹下的js文件
       },
       { 
         test: /\.css$/,

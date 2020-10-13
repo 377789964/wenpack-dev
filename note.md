@@ -204,3 +204,14 @@
       }
     }
   },
+- js增加eslint校验功能
+- npm install eslint eslint-loader -D
+- https://eslint.org/demo下载.eslintrc.json文件放在根目录下
+- 配置内容
+- {
+    test: /\.js$/,
+    loader: 'eslint-loader',
+    enforce: 'pre', // js文件会强制先走pre的loader
+    exclude: /node_modules/
+  }
+- 会校验js文件，报错则项目启动失败，暂时先不使用
