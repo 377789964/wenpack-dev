@@ -215,3 +215,36 @@
     exclude: /node_modules/
   }
 - 会校验js文件，报错则项目启动失败，暂时先不使用
+
+## webpack配置第三方插件（eg: jquery）
+- 方法一
+- npm i jquery
+- npm i expose-loader -D // 暴露全局loader（将变量扩展在window上，作为全局变量）
+- 可以在.vue文件中使用loader： import $ from 'expose-loader?exposes[]=$&exposes[]=jQuery!jquery'
+- 可以在webpack.config.js文件中使用
+- {
+    test: require.resolve('jquery'),
+    loader: 'expose-loader',
+    options: {
+      exposes: ['$', 'jQuery'],
+    }
+  },
+- 方法二
+- 不使用这种方式也可以使用webpack插件将$注入
+- 在配置文件中：
+- let Webpack = require('webpack')
+- plugins: [
+    new Webpack.ProvidePlugin({
+      jquery: '$'
+    }) // 在每个模块中注入$
+  ]
+- 方法三
+- 使用标签方式引入
+- index.html文件中：<script src="https://lib.baomitu.com/jquery/3.1.1/jquery.js"></script>
+- .js文件中使用：
+- import $ from 'jquery' // 重复引入的不需要被打包需要配置文件配置externals属性
+  console.log($, '$===========window.$', window.$)
+- webpack.config.js文件中：
+- externals: { // 不打包的引入（bundle.js由353kb变为35.4kb）
+    jquery: 'jQuery'
+  },

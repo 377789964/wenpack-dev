@@ -4,6 +4,7 @@ let HtmlWebpackPlugin = require("html-webpack-plugin")
 let MiniCssExtractPlugin = require("mini-css-extract-plugin")
 let OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 let TerserJSPlugin = require('terser-webpack-plugin')
+let Webpack = require('webpack')
 
 module.exports = {
   optimization: { // 优化项
@@ -32,9 +33,22 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: 'main.css' // 将样式抽离成文件的文件名
     })
+    // new Webpack.ProvidePlugin({
+    //   $: 'jquery'
+    // }) // 在每个模块中注入$
   ],
+  externals: { // 不打包的引入
+    jquery: 'jQuery'
+  },
   module: { // 模块
     rules: [
+      // {
+      //   test: require.resolve('jquery'),
+      //   loader: 'expose-loader',
+      //   options: {
+      //     exposes: ['$', 'jQuery'],
+      //   }
+      // }, // 不使用这个方法可以使用webpack插件将$注入模块中(在plugins中配置)
       // {
       //   test: /\.js$/,
       //   loader: 'eslint-loader',

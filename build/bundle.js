@@ -145,10 +145,11 @@ eval("// extracted by mini-css-extract-plugin\n\n//# sourceURL=webpack:///./src/
 /*!**********************!*\
   !*** ./src/index.js ***!
   \**********************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-eval("var _classCallCheck = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ \"./node_modules/@babel/runtime/helpers/classCallCheck.js\");\n\nvar _class, _temp;\n\n// console.log('hello zfpx')\nvar str = __webpack_require__(/*! ./a/a.js */ \"./src/a/a.js\");\n\n__webpack_require__(/*! ./index.css */ \"./src/index.css\");\n\n__webpack_require__(/*! ./index.scss */ \"./src/index.scss\");\n\nconsole.log(str, 'str');\n\nvar fn = function fn() {\n  console.log('se6');\n};\n\nfn(); // 装饰器的写法也并不支持，需要插件 decorators-legacy\n// 这种写法babel本身不支持，需要使用插件 @babel/plugin-proposal-class-properties\n\nvar // 装饰器是个函数，装饰的是类A，则函数log的第一个参数就是该类A\nA = log(_class = (_temp = function A() {\n  \"use strict\";\n\n  _classCallCheck(this, A);\n\n  this.a = 1;\n}, _temp)) || _class;\n\nvar a = new A();\nconsole.log(a.a, 'a');\n\nfunction log(target) {\n  console.log(target, 'target');\n}\n\n//# sourceURL=webpack:///./src/index.js?");
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ \"./node_modules/@babel/runtime/helpers/classCallCheck.js\");\n/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! jquery */ \"jquery\");\n/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_1__);\n\n\nvar _class, _temp;\n\n// console.log('hello zfpx')\nvar str = __webpack_require__(/*! ./a/a.js */ \"./src/a/a.js\");\n\n__webpack_require__(/*! ./index.css */ \"./src/index.css\");\n\n__webpack_require__(/*! ./index.scss */ \"./src/index.scss\");\n\nconsole.log(str, 'str'); // import $ from 'expose-loader?exposes[]=$&exposes[]=jQuery!jquery' // 在页面中使用loader将$暴露给window\n// import $ from 'jquery'\n// console.log($, '-------', window.$, '-------')\n// 使用webpack插件将$注入每个模块中（配置文件中配置plugins中配置new Webpack.ProvidePlugin()）\n// console.log($, '--------')\n// 这样写相当于多引入一个模块打包（不引入即可直接访问html已经script标签引入过了，只是代码习惯写引入变量）\n// 为了打包的时候不打包该引入可在webpack中配置externals属性\n\n // html文件中使用script标签引入jquery，可直接在window上访问属性$\n\nconsole.log(jquery__WEBPACK_IMPORTED_MODULE_1___default.a, '$===========window.$', window.$);\n\nvar fn = function fn() {\n  console.log('se6');\n};\n\nfn(); // 装饰器的写法也并不支持，需要插件 decorators-legacy\n// 这种写法babel本身不支持，需要使用插件 @babel/plugin-proposal-class-properties\n\nvar // 装饰器是个函数，装饰的是类A，则函数log的第一个参数就是该类A\nA = log(_class = (_temp = function A() {\n  _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0___default()(this, A);\n\n  this.a = 1;\n}, _temp)) || _class;\n\nvar a = new A();\nconsole.log(a.a, 'a');\n\nfunction log(target) {\n  console.log(target, 'target');\n}\n\n//# sourceURL=webpack:///./src/index.js?");
 
 /***/ }),
 
@@ -160,6 +161,17 @@ eval("var _classCallCheck = __webpack_require__(/*! @babel/runtime/helpers/class
 /***/ (function(module, exports, __webpack_require__) {
 
 eval("// extracted by mini-css-extract-plugin\n\n//# sourceURL=webpack:///./src/index.scss?");
+
+/***/ }),
+
+/***/ "jquery":
+/*!*************************!*\
+  !*** external "jQuery" ***!
+  \*************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("module.exports = jQuery;\n\n//# sourceURL=webpack:///external_%22jQuery%22?");
 
 /***/ })
 

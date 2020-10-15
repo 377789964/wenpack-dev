@@ -4,6 +4,19 @@ require('./index.css')
 require('./index.scss')
 console.log(str, 'str')
 
+// import $ from 'expose-loader?exposes[]=$&exposes[]=jQuery!jquery' // 在页面中使用loader将$暴露给window
+// import $ from 'jquery'
+// console.log($, '-------', window.$, '-------')
+
+// 使用webpack插件将$注入每个模块中（配置文件中配置plugins中配置new Webpack.ProvidePlugin()）
+// console.log($, '--------')
+
+// 这样写相当于多引入一个模块打包（不引入即可直接访问html已经script标签引入过了，只是代码习惯写引入变量）
+// 为了打包的时候不打包该引入可在webpack中配置externals属性
+import $ from 'jquery'
+// html文件中使用script标签引入jquery，可直接在window上访问属性$
+console.log($, '$===========window.$', window.$)
+
 let fn = () => {
   console.log('se6')
 }
