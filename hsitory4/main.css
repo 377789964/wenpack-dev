@@ -6,18 +6,6 @@ body {
 body {
   background-color: #cecdcd;
 }
-body::after {
-  content: "";
-  background: url(20450b2bd0dcec22289ec2a76420b694.jpg);
-  /* css-loader会解析为require('./logo.png') */
-  opacity: 0.1;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  position: absolute;
-  z-index: -1;   
-}
 body div {
   border: 3px solid orange;
   width: 300px;

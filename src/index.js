@@ -34,3 +34,10 @@ console.log(a.a, 'a')
 function log(target) {
   console.log(target, 'target')
 }
+
+// 1）在js中创建图片来引入
+import logo from './logo.png' // 把图片引入返回的是已给新的图片地址
+console.log(logo, 'logo')
+let image = new Image()
+image.src = logo
+document.body.appendChild(image)

@@ -248,3 +248,29 @@
 - externals: { // 不打包的引入（bundle.js由353kb变为35.4kb）
     jquery: 'jQuery'
   },
+
+# 打包图片
+- (1) 在js中创建图片来引入
+- import logo from './logo.png' // 把图片引入返回的是已给新的图片地址
+  let image = new Image()
+  image.src = logo
+  document.body.appendChild(image
+- 使用loader：npm install file-loader -D // 默认会在内部生成图片在build目录下，返回生成图片的名字
+- 配置信息 {
+        test: /\.(png|jpg|gif)$/,
+        use: [{
+          loader: 'file-loader',
+          // file-loaderb版本5以上和html-withimg-loader冲突，需要配置esModule: false即可html-withimg-loader正常使用
+          options:{
+            esModule: false
+          }
+        }]
+      },
+- (2) css中引入url背景图
+- background: url('./flower.jpg'); // css-loader会解析为require('./logo.png')不需要安装loader
+- (3) 在html中使用img标签<img src="./flower1.jpg" alt="">
+- 使用loader: npm install html-withimg-loader -D
+- 配置信息 {
+        test:/\.(html|htm)$/i,
+         use:'html-withimg-loader', // 解析 html中的图片资源
+      },

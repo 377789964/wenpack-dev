@@ -42,19 +42,6 @@ module.exports = {
   },
   module: { // 模块
     rules: [
-      {
-        test:/\.(html|htm)$/i,
-         use:'html-withimg-loader', // 解析 html中的图片资源
-      },
-      {
-        test: /\.(png|jpg|gif)$/,
-        use: [{
-          loader: 'file-loader', // 解析js中的图片资源
-          options:{ // file-loaderb版本5以上和html-withimg-loader冲突，需要配置esModule: false即可
-            esModule: false
-          }
-        }]
-      },
       // {
       //   test: require.resolve('jquery'),
       //   loader: 'expose-loader',
